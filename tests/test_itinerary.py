@@ -1,12 +1,10 @@
-import pytest
-
 from waypoint.distance import Distance
 from waypoint.itinerary import Itinerary
-from waypoint.trail import Trail
+from waypoint.trail import DayHike
 
 
 def make_trail(trail_id, distance):
-    return Trail(
+    return DayHike(
         trail_id,
         f"Trail {trail_id}",
         Distance(distance, "km"),
@@ -17,52 +15,44 @@ def make_trail(trail_id, distance):
 
 def test_itinerary_total_distance():
     trail1 = make_trail(1, 5)
-    trail2 = make_trail(2, 10)
-    trail3 = make_trail(3, 15)
+    trail2 = make_trail(2, 7)
 
-    itinerary = Itinerary()
-
-    itinerary.add_trail(trail1)
-    itinerary.add_trail(trail2)
-    itinerary.add_trail(trail3)
+    itinerary = Itinerary([trail1, trail2])
 
     total = itinerary.total_distance()
 
-    assert total.magnitude == pytest.approx(30)
-    assert total.unit == "km"
+    assert total == Distance(12, "km")
 
 
 def test_itinerary_preserves_order():
     trail1 = make_trail(1, 5)
-    trail2 = make_trail(2, 10)
+    trail2 = make_trail(2, 7)
 
-    itinerary = Itinerary()
+    itinerary = Itinerary([trail1, trail2])
 
-    itinerary.add_trail(trail1)
-    itinerary.add_trail(trail2)
-
-    assert itinerary.trails == (trail1, trail2)
+    assert itinerary.trails[0] == trail1
+    assert itinerary.trails[1] == trail2
 
 
 def test_itineraries_are_independent():
     trail1 = make_trail(1, 5)
+    trail2 = make_trail(2, 7)
 
-    itinerary1 = Itinerary()
-    itinerary2 = Itinerary()
+    itinerary1 = Itinerary([trail1])
+    itinerary2 = Itinerary([trail2])
 
-    itinerary1.add_trail(trail1)
-
-    assert len(itinerary1) == 1
-    assert len(itinerary2) == 0
+    assert itinerary1.trails != itinerary2.trails
+    assert itinerary1.total_distance() == Distance(5, "km")
+    assert itinerary2.total_distance() == Distance(7, "km")
 
 
 def test_total_distance_can_be_requested_in_miles():
     trail1 = make_trail(1, 10)
+    trail2 = make_trail(2, 10)
 
-    itinerary = Itinerary()
-    itinerary.add_trail(trail1)
+    itinerary = Itinerary([trail1, trail2])
 
-    total = itinerary.total_distance("mi")
+    total = itinerary.total_distance(unit="mi")
 
     assert total.unit == "mi"
-    assert total.magnitude == pytest.approx(6.21371, rel=1e-5)
+    assert total.magnitude == 20 * Distance.KM_TO_MI

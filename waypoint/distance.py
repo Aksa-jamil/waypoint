@@ -13,6 +13,10 @@ class Distance:
         self._magnitude = float(magnitude)
         self._unit = unit
 
+    # =========================================================
+    # Validation
+    # =========================================================
+
     @staticmethod
     def _validate_magnitude(magnitude):
         if magnitude < 0:
@@ -23,6 +27,10 @@ class Distance:
         if unit not in Distance.ALLOWED_UNITS:
             raise ValueError("Unit must be 'km' or 'mi'.")
 
+    # =========================================================
+    # Properties
+    # =========================================================
+
     @property
     def magnitude(self):
         """Read-only access to the distance magnitude."""
@@ -32,6 +40,10 @@ class Distance:
     def unit(self):
         """Read-only access to the distance unit."""
         return self._unit
+
+    # =========================================================
+    # Conversion
+    # =========================================================
 
     def convert(self, target_unit):
         """Return this distance converted to the target unit."""
@@ -47,6 +59,31 @@ class Distance:
             converted = self._magnitude * self.MI_TO_KM
 
         return Distance(converted, target_unit)
+
+    # =========================================================
+    # Equality
+    # =========================================================
+
+    def __eq__(self, other):
+        """Compare two distances after converting them to the same unit."""
+
+        if not isinstance(other, Distance):
+            return NotImplemented
+
+        converted = other.convert(self.unit)
+
+        return self.magnitude == converted.magnitude
+
+    def __hash__(self):
+        """Return a hash based on the distance in kilometres."""
+
+        distance_km = self.convert("km").magnitude
+
+        return hash(round(distance_km, 10))
+
+    # =========================================================
+    # String representation
+    # =========================================================
 
     def __str__(self):
         return f"{self._magnitude:g} {self._unit}"

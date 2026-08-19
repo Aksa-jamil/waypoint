@@ -4,12 +4,18 @@ from waypoint.distance import Distance
 class Itinerary:
     """An ordered collection of trails."""
 
-    def __init__(self):
-        self._trails = []
+    def __init__(self, trails=None):
+        """Create an itinerary with an optional initial collection of trails."""
+
+        if trails is None:
+            self._trails = []
+        else:
+            self._trails = list(trails)
 
     @property
     def trails(self):
         """Read-only view of the itinerary's trails."""
+
         return tuple(self._trails)
 
     def add_trail(self, trail):

@@ -1,14 +1,9 @@
-{% load static %}
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waypoint</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-</head>
-<body>
-    <h1>{{ greeting }}</h1>
-</body>
-</html>
+{% block title %}Home - Waypoint{% endblock %}
+
+{% block content %}
+<h1>Welcome to Waypoint</h1>
+
+<p>Thank you, {{ name }}!</p>
+{% endblock %}

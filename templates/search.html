@@ -1,26 +1,17 @@
-{% load static %}
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-</head>
-<body>
-    <h1>Search</h1>
+{% block title %}Search - Waypoint{% endblock %}
 
-    <form method="get">
-        <label for="q">Search:</label>
-        <input type="text" id="q" name="q" value="{{ query }}">
-        <button type="submit">Search</button>
-    </form>
+{% block content %}
+<h1>Search</h1>
 
-    {% if query %}
-        <p>You searched for: {{ query }}</p>
-    {% else %}
-        <p>Enter a search term.</p>
-    {% endif %}
-</body>
-</html>
+<form method="get">
+    <label for="q">Search:</label>
+    <input type="text" id="q" name="q" value="{{ query }}">
+    <button type="submit">Search</button>
+</form>
+
+{% if query %}
+    <p>Search results for: {{ query }}</p>
+{% endif %}
+{% endblock %}

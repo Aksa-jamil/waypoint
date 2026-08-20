@@ -1,43 +1,30 @@
 # Waypoint
 
-Waypoint is a Django web application built around the hiking domain engine developed during Weeks 7â€“8.
+Waypoint is a Django web application built around a hiking trail domain engine. The project was developed incrementally through Weeks 7-14, progressing from domain modeling to a Django web application with database relationships, validation, testing, and final handoff.
+
+## Features
+
+- Hiking trail domain model with different trail types
+- Distance value object with unit conversion and validation
+- Django Model-View-Template (MVT) architecture
+- Trail catalog with open-trail filtering
+- Park model related to trails through a ForeignKey
+- Park-based trail filtering
+- Django admin management for Parks and Trails
+- Trail detail pages with 404 handling
+- Automated domain and Django tests
+
+## Requirements
+
+- Python 3.12+
+- Django 4.2
+- pytest
+- Git
 
 ## Setup
 
-Create a virtual environment:
+### 1. Clone the repository
 
-python -m venv env
-
-Activate it on Windows:
-
-.\env\Scripts\Activate.ps1
-
-Install dependencies:
-
-pip install -r requirements.txt
-
-Run migrations:
-
-python manage.py migrate
-
-Start the development server:
-
-python manage.py runserver
-
-Open http://127.0.0.1:8000/
-
-## Tests
-
-Run:
-
-pytest -q
-
-## MVT
-
-Django follows the Model-View-Template (MVT) architecture.
-
-Model: represents application data and database structures.
-
-View: contains application logic and determines what response is returned.
-
-Template: controls the presentation/HTML shown to the user.
+```bash
+git clone https://github.com/Aksa-jamil/waypoint.git
+cd waypoint

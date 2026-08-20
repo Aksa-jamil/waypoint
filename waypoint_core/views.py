@@ -32,12 +32,26 @@ def search(request):
     return render(request, "search.html", context)
 
 def catalog(request):
-    from trails.models import Trail
+    from trails.models import Park, Trail
+
+    park_id = request.GET.get("park")
 
     trails = Trail.objects.filter(is_open=True).order_by("distance_km")
 
+    selected_park = None
+
+    if park_id:
+        selected_park = Park.objects.filter(id=park_id).first()
+
+        if selected_park:
+            trails = trails.filter(park=selected_park)
+
+    parks = Park.objects.all().order_by("name")
+
     context = {
-        "trails": trails
+        "trails": trails,
+        "parks": parks,
+        "selected_park": selected_park,
     }
 
     return render(request, "catalog.html", context)

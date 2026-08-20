@@ -1,32 +1,16 @@
-{% load static %}
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report a Trail</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-</head>
-<body>
-    <h1>Report a Trail</h1>
+{% block title %}Report - Waypoint{% endblock %}
 
-    <form method="post">
-        {% csrf_token %}
+{% block content %}
+<h1>Submit a Report</h1>
 
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+<form method="post">
+    {% csrf_token %}
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" name="name" required>
 
-        <label for="trail">Trail:</label>
-        <input type="text" id="trail" name="trail" required>
-
-        <label for="note">Note:</label>
-        <textarea id="note" name="note"></textarea>
-
-        <button type="submit">Submit Report</button>
-    </form>
-</body>
-</html>
+    <button type="submit">Submit Report</button>
+</form>
+{% endblock %}

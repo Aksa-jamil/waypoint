@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 
 from waypoint_core.views import home, report, search, catalog
 
@@ -10,4 +10,5 @@ urlpatterns = [
     path("report/", report, name="report"),
     path("search/", search, name="search"),
     path("catalog/", catalog, name="catalog"),
+    path("trails/", include("trails.urls")),
 ]
